@@ -55,10 +55,9 @@
             // 
             this.cbCargoEmpleado.FormattingEnabled = true;
             this.cbCargoEmpleado.Items.AddRange(new object[] {
-            "A",
-            "B",
-            "C",
-            "D"});
+            "Cajeros",
+            "Reponedores",
+            "Atención al Cliente"});
             this.cbCargoEmpleado.Location = new System.Drawing.Point(287, 130);
             this.cbCargoEmpleado.Name = "cbCargoEmpleado";
             this.cbCargoEmpleado.Size = new System.Drawing.Size(131, 21);

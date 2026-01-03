@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity; 
 
 namespace Datos
 {
@@ -14,7 +15,7 @@ namespace Datos
             {
                 using (var context = new BDGestionProductosEntities())
                 {
-                    return context.CSupervisor.Any(s => s.Codigo.Equals(codigo));
+                    return context.CSupervisor.Any(s => s.Codigo == codigo);
                 }
             }
             catch (Exception)
@@ -29,18 +30,33 @@ namespace Datos
             {
                 using (var context = new BDGestionProductosEntities())
                 {
-                    var sucursal = context.CSucursal.Include("CSupervisor").FirstOrDefault(s => s.Codigo.Equals(codigoSucursal));
+                    var supervisorExistente = context.CSupervisor
+                        .Include(s => s.CSucursal)
+                        .FirstOrDefault(s => s.Codigo == cSupervisor.Codigo);
+
+                    if (supervisorExistente != null)
+                    {
+                        string sucursalCodigo = supervisorExistente.CSucursal
+                            .FirstOrDefault()?.Codigo ?? "Sin sucursal";
+
+                        return $"Supervisor existe|{supervisorExistente.Codigo}|{sucursalCodigo}";
+                    }
+
+                    var sucursal = context.CSucursal
+                        .Include(s => s.CSupervisor)
+                        .FirstOrDefault(s => s.Codigo == codigoSucursal);
 
                     if (sucursal == null)
                     {
-                        return "Sucursal no encontrada.";
+                        return "Sucursal no encontrada";
                     }
 
                     context.CSupervisor.Add(cSupervisor);
                     sucursal.CSupervisor.Add(cSupervisor);
                     context.SaveChanges();
+
+                    return "Supervisor registrado correctamente.";
                 }
-                return "Supervisor registrado correctamente.";
             }
             catch (Exception ex)
             {
@@ -54,11 +70,18 @@ namespace Datos
             {
                 using (var context = new BDGestionProductosEntities())
                 {
-                    CSupervisor supervisorTemp = context.CSupervisor.Find(cSupervisor.Codigo);
+                    var supervisorTemp = context.CSupervisor.Find(cSupervisor.Codigo);
+
+                    if (supervisorTemp == null)
+                    {
+                        return "Supervisor no encontrado";
+                    }
+
                     supervisorTemp.Nombre = cSupervisor.Nombre;
                     supervisorTemp.Telefono = cSupervisor.Telefono;
                     supervisorTemp.Correo = cSupervisor.Correo;
                     supervisorTemp.Fecha_ingreso = cSupervisor.Fecha_ingreso;
+
                     context.SaveChanges();
                 }
                 return "Supervisor modificado correctamente";
@@ -75,7 +98,13 @@ namespace Datos
             {
                 using (var context = new BDGestionProductosEntities())
                 {
-                    CSupervisor supervisorTemp = context.CSupervisor.Find(codigo);
+                    var supervisorTemp = context.CSupervisor.Find(codigo);
+
+                    if (supervisorTemp == null)
+                    {
+                        return "Supervisor no encontrado";
+                    }
+
                     context.CSupervisor.Remove(supervisorTemp);
                     context.SaveChanges();
                 }
@@ -89,42 +118,15 @@ namespace Datos
 
         public List<CSupervisor> ListarSupervisoresPorSucursal(string codigoSucursal)
         {
-            List<CSupervisor> supervisores = new List<CSupervisor>();
-            try
-            {
-                using (var context = new BDGestionProductosEntities())
-                {
-                    context.Configuration.LazyLoadingEnabled = false;
-                    var sucursal = context.CSucursal
-                        .Include("CSupervisor")
-                        .FirstOrDefault(s => s.Codigo.Equals(codigoSucursal));
-
-                    if (sucursal != null && sucursal.CSupervisor != null)
-                    {
-                        supervisores = sucursal.CSupervisor.ToList();
-                    }
-                }
-                return supervisores;
-            }
-            catch (Exception)
-            {
-                return supervisores;
-            }
-        }
-        public List<CSupervisor> ListarSupervisoresPorSucursalSeleccionada(string codigoSucursal)
-        {
             try
             {
                 using (var context = new BDGestionProductosEntities())
                 {
                     context.Configuration.LazyLoadingEnabled = false;
 
-                    var resultado = context.CSupervisor
-                                           .Include("CSucursal")
-                                           .Where(s => s.CSucursal.Any(su => su.Codigo == codigoSucursal))
-                                           .ToList();
-
-                    return resultado;
+                    return context.CSupervisor
+                        .Where(s => s.CSucursal.Any(su => su.Codigo == codigoSucursal))
+                        .ToList();
                 }
             }
             catch (Exception ex)
@@ -134,5 +136,25 @@ namespace Datos
             }
         }
 
+        public List<CSupervisor> ListarSupervisoresPorSucursalSeleccionada(string codigoSucursal)
+        {
+            try
+            {
+                using (var context = new BDGestionProductosEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+
+                    return context.CSupervisor
+                        .Include(s => s.CSucursal)
+                        .Where(s => s.CSucursal.Any(su => su.Codigo == codigoSucursal))
+                        .ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al listar supervisores: " + ex.Message);
+                return new List<CSupervisor>();
+            }
+        }
     }
 }
