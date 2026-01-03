@@ -1,0 +1,628 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="GestionProductosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CEmpleado">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Dni" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Telefono" Type="int" />
+          <Property Name="Correo" Type="varchar" MaxLength="100" />
+          <Property Name="Cargo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fecha_ingreso" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CProducto">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Stock" Type="int" Nullable="false" />
+          <Property Name="Categoria" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Precio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Oferta" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CProveedor">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CSucursal">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Correo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Estado" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CSupervisor">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Telefono" Type="int" />
+          <Property Name="Correo" Type="varchar" MaxLength="100" />
+          <Property Name="Fecha_ingreso" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CUsuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ruc" Type="bigint" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Correo" Type="nvarchar" MaxLength="100" />
+          <Property Name="Contrasena" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Rol" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Producto_Proveedor">
+          <Key>
+            <PropertyRef Name="Codigo_Producto" />
+            <PropertyRef Name="Codigo_Proveedor" />
+          </Key>
+          <Property Name="Codigo_Producto" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Codigo_Proveedor" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sucursal_Empleado">
+          <Key>
+            <PropertyRef Name="Codigo_Sucursal" />
+            <PropertyRef Name="Codigo_Empleado" />
+          </Key>
+          <Property Name="Codigo_Sucursal" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Codigo_Empleado" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sucursal_Producto">
+          <Key>
+            <PropertyRef Name="Codigo_sucursal" />
+            <PropertyRef Name="Codigo_producto" />
+          </Key>
+          <Property Name="Codigo_sucursal" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Codigo_producto" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sucursal_Proveedor">
+          <Key>
+            <PropertyRef Name="Codigo_sucursal" />
+            <PropertyRef Name="Codigo_proveedor" />
+          </Key>
+          <Property Name="Codigo_sucursal" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Codigo_proveedor" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sucursal_Supervisor">
+          <Key>
+            <PropertyRef Name="Codigo_Sucursal" />
+            <PropertyRef Name="Codigo_Supervisor" />
+          </Key>
+          <Property Name="Codigo_Sucursal" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Codigo_Supervisor" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Supervisor_Empleado">
+          <Key>
+            <PropertyRef Name="Codigo_Supervisor" />
+            <PropertyRef Name="Codigo_Empleado" />
+          </Key>
+          <Property Name="Codigo_Supervisor" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Codigo_Empleado" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Producto___Codig__2B947552">
+          <End Role="CProducto" Type="Self.CProducto" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Producto_Proveedor" Type="Self.Producto_Proveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProducto">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Producto_Proveedor">
+              <PropertyRef Name="Codigo_Producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Producto___Codig__2C88998B">
+          <End Role="CProveedor" Type="Self.CProveedor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Producto_Proveedor" Type="Self.Producto_Proveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProveedor">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Producto_Proveedor">
+              <PropertyRef Name="Codigo_Proveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sucursal___Codig__1881A0DE">
+          <End Role="CSucursal" Type="Self.CSucursal" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Sucursal_Producto" Type="Self.Sucursal_Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CSucursal">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Sucursal_Producto">
+              <PropertyRef Name="Codigo_sucursal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sucursal___Codig__1975C517">
+          <End Role="CProducto" Type="Self.CProducto" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Sucursal_Producto" Type="Self.Sucursal_Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProducto">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Sucursal_Producto">
+              <PropertyRef Name="Codigo_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sucursal___Codig__1C5231C2">
+          <End Role="CSucursal" Type="Self.CSucursal" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Sucursal_Proveedor" Type="Self.Sucursal_Proveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CSucursal">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Sucursal_Proveedor">
+              <PropertyRef Name="Codigo_sucursal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sucursal___Codig__1D4655FB">
+          <End Role="CProveedor" Type="Self.CProveedor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Sucursal_Proveedor" Type="Self.Sucursal_Proveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProveedor">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Sucursal_Proveedor">
+              <PropertyRef Name="Codigo_proveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sucursal___Codig__2022C2A6">
+          <End Role="CSucursal" Type="Self.CSucursal" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Sucursal_Empleado" Type="Self.Sucursal_Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CSucursal">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Sucursal_Empleado">
+              <PropertyRef Name="Codigo_Sucursal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sucursal___Codig__2116E6DF">
+          <End Role="CEmpleado" Type="Self.CEmpleado" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Sucursal_Empleado" Type="Self.Sucursal_Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CEmpleado">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Sucursal_Empleado">
+              <PropertyRef Name="Codigo_Empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sucursal___Codig__23F3538A">
+          <End Role="CSucursal" Type="Self.CSucursal" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Sucursal_Supervisor" Type="Self.Sucursal_Supervisor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CSucursal">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Sucursal_Supervisor">
+              <PropertyRef Name="Codigo_Sucursal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sucursal___Codig__24E777C3">
+          <End Role="CSupervisor" Type="Self.CSupervisor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Sucursal_Supervisor" Type="Self.Sucursal_Supervisor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CSupervisor">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Sucursal_Supervisor">
+              <PropertyRef Name="Codigo_Supervisor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Superviso__Codig__27C3E46E">
+          <End Role="CSupervisor" Type="Self.CSupervisor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Supervisor_Empleado" Type="Self.Supervisor_Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CSupervisor">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Supervisor_Empleado">
+              <PropertyRef Name="Codigo_Supervisor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Superviso__Codig__28B808A7">
+          <End Role="CEmpleado" Type="Self.CEmpleado" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Supervisor_Empleado" Type="Self.Supervisor_Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CEmpleado">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Supervisor_Empleado">
+              <PropertyRef Name="Codigo_Empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GestionProductosModelStoreContainer">
+          <EntitySet Name="CEmpleado" EntityType="Self.CEmpleado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CProducto" EntityType="Self.CProducto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CProveedor" EntityType="Self.CProveedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CSucursal" EntityType="Self.CSucursal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CSupervisor" EntityType="Self.CSupervisor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CUsuario" EntityType="Self.CUsuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Producto_Proveedor" EntityType="Self.Producto_Proveedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sucursal_Empleado" EntityType="Self.Sucursal_Empleado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sucursal_Producto" EntityType="Self.Sucursal_Producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sucursal_Proveedor" EntityType="Self.Sucursal_Proveedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sucursal_Supervisor" EntityType="Self.Sucursal_Supervisor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supervisor_Empleado" EntityType="Self.Supervisor_Empleado" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Producto___Codig__2B947552" Association="Self.FK__Producto___Codig__2B947552">
+            <End Role="CProducto" EntitySet="CProducto" />
+            <End Role="Producto_Proveedor" EntitySet="Producto_Proveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto___Codig__2C88998B" Association="Self.FK__Producto___Codig__2C88998B">
+            <End Role="CProveedor" EntitySet="CProveedor" />
+            <End Role="Producto_Proveedor" EntitySet="Producto_Proveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sucursal___Codig__1881A0DE" Association="Self.FK__Sucursal___Codig__1881A0DE">
+            <End Role="CSucursal" EntitySet="CSucursal" />
+            <End Role="Sucursal_Producto" EntitySet="Sucursal_Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sucursal___Codig__1975C517" Association="Self.FK__Sucursal___Codig__1975C517">
+            <End Role="CProducto" EntitySet="CProducto" />
+            <End Role="Sucursal_Producto" EntitySet="Sucursal_Producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sucursal___Codig__1C5231C2" Association="Self.FK__Sucursal___Codig__1C5231C2">
+            <End Role="CSucursal" EntitySet="CSucursal" />
+            <End Role="Sucursal_Proveedor" EntitySet="Sucursal_Proveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sucursal___Codig__1D4655FB" Association="Self.FK__Sucursal___Codig__1D4655FB">
+            <End Role="CProveedor" EntitySet="CProveedor" />
+            <End Role="Sucursal_Proveedor" EntitySet="Sucursal_Proveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sucursal___Codig__2022C2A6" Association="Self.FK__Sucursal___Codig__2022C2A6">
+            <End Role="CSucursal" EntitySet="CSucursal" />
+            <End Role="Sucursal_Empleado" EntitySet="Sucursal_Empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sucursal___Codig__2116E6DF" Association="Self.FK__Sucursal___Codig__2116E6DF">
+            <End Role="CEmpleado" EntitySet="CEmpleado" />
+            <End Role="Sucursal_Empleado" EntitySet="Sucursal_Empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sucursal___Codig__23F3538A" Association="Self.FK__Sucursal___Codig__23F3538A">
+            <End Role="CSucursal" EntitySet="CSucursal" />
+            <End Role="Sucursal_Supervisor" EntitySet="Sucursal_Supervisor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sucursal___Codig__24E777C3" Association="Self.FK__Sucursal___Codig__24E777C3">
+            <End Role="CSupervisor" EntitySet="CSupervisor" />
+            <End Role="Sucursal_Supervisor" EntitySet="Sucursal_Supervisor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Superviso__Codig__27C3E46E" Association="Self.FK__Superviso__Codig__27C3E46E">
+            <End Role="CSupervisor" EntitySet="CSupervisor" />
+            <End Role="Supervisor_Empleado" EntitySet="Supervisor_Empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Superviso__Codig__28B808A7" Association="Self.FK__Superviso__Codig__28B808A7">
+            <End Role="CEmpleado" EntitySet="CEmpleado" />
+            <End Role="Supervisor_Empleado" EntitySet="Supervisor_Empleado" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GestionProductosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CEmpleado">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Dni" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefono" Type="Int32" />
+          <Property Name="Correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Cargo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Fecha_ingreso" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CSucursal" Relationship="Self.Sucursal_Empleado" FromRole="CEmpleado" ToRole="CSucursal" />
+          <NavigationProperty Name="CSupervisor" Relationship="Self.Supervisor_Empleado" FromRole="CEmpleado" ToRole="CSupervisor" />
+        </EntityType>
+        <EntityType Name="CProducto">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Stock" Type="Int32" Nullable="false" />
+          <Property Name="Categoria" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Precio" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Oferta" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CProveedor" Relationship="Self.Producto_Proveedor" FromRole="CProducto" ToRole="CProveedor" />
+          <NavigationProperty Name="CSucursal" Relationship="Self.Sucursal_Producto" FromRole="CProducto" ToRole="CSucursal" />
+        </EntityType>
+        <EntityType Name="CProveedor">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CProducto" Relationship="Self.Producto_Proveedor" FromRole="CProveedor" ToRole="CProducto" />
+          <NavigationProperty Name="CSucursal" Relationship="Self.Sucursal_Proveedor" FromRole="CProveedor" ToRole="CSucursal" />
+        </EntityType>
+        <EntityType Name="CSucursal">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CEmpleado" Relationship="Self.Sucursal_Empleado" FromRole="CSucursal" ToRole="CEmpleado" />
+          <NavigationProperty Name="CProducto" Relationship="Self.Sucursal_Producto" FromRole="CSucursal" ToRole="CProducto" />
+          <NavigationProperty Name="CProveedor" Relationship="Self.Sucursal_Proveedor" FromRole="CSucursal" ToRole="CProveedor" />
+          <NavigationProperty Name="CSupervisor" Relationship="Self.Sucursal_Supervisor" FromRole="CSucursal" ToRole="CSupervisor" />
+        </EntityType>
+        <EntityType Name="CSupervisor">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefono" Type="Int32" />
+          <Property Name="Correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_ingreso" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CSucursal" Relationship="Self.Sucursal_Supervisor" FromRole="CSupervisor" ToRole="CSucursal" />
+          <NavigationProperty Name="CEmpleado" Relationship="Self.Supervisor_Empleado" FromRole="CSupervisor" ToRole="CEmpleado" />
+        </EntityType>
+        <EntityType Name="CUsuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ruc" Type="Int64" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Contrasena" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Rol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="Producto_Proveedor">
+          <End Role="CProducto" Type="Self.CProducto" Multiplicity="*" />
+          <End Role="CProveedor" Type="Self.CProveedor" Multiplicity="*" />
+        </Association>
+        <Association Name="Sucursal_Empleado">
+          <End Role="CSucursal" Type="Self.CSucursal" Multiplicity="*" />
+          <End Role="CEmpleado" Type="Self.CEmpleado" Multiplicity="*" />
+        </Association>
+        <Association Name="Sucursal_Producto">
+          <End Role="CSucursal" Type="Self.CSucursal" Multiplicity="*" />
+          <End Role="CProducto" Type="Self.CProducto" Multiplicity="*" />
+        </Association>
+        <Association Name="Sucursal_Proveedor">
+          <End Role="CSucursal" Type="Self.CSucursal" Multiplicity="*" />
+          <End Role="CProveedor" Type="Self.CProveedor" Multiplicity="*" />
+        </Association>
+        <Association Name="Sucursal_Supervisor">
+          <End Role="CSucursal" Type="Self.CSucursal" Multiplicity="*" />
+          <End Role="CSupervisor" Type="Self.CSupervisor" Multiplicity="*" />
+        </Association>
+        <Association Name="Supervisor_Empleado">
+          <End Role="CSupervisor" Type="Self.CSupervisor" Multiplicity="*" />
+          <End Role="CEmpleado" Type="Self.CEmpleado" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="BDGestionProductosEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CEmpleado" EntityType="Self.CEmpleado" />
+          <EntitySet Name="CProducto" EntityType="Self.CProducto" />
+          <EntitySet Name="CProveedor" EntityType="Self.CProveedor" />
+          <EntitySet Name="CSucursal" EntityType="Self.CSucursal" />
+          <EntitySet Name="CSupervisor" EntityType="Self.CSupervisor" />
+          <EntitySet Name="CUsuario" EntityType="Self.CUsuario" />
+          <AssociationSet Name="Producto_Proveedor" Association="Self.Producto_Proveedor">
+            <End Role="CProducto" EntitySet="CProducto" />
+            <End Role="CProveedor" EntitySet="CProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="Sucursal_Empleado" Association="Self.Sucursal_Empleado">
+            <End Role="CSucursal" EntitySet="CSucursal" />
+            <End Role="CEmpleado" EntitySet="CEmpleado" />
+          </AssociationSet>
+          <AssociationSet Name="Sucursal_Producto" Association="Self.Sucursal_Producto">
+            <End Role="CSucursal" EntitySet="CSucursal" />
+            <End Role="CProducto" EntitySet="CProducto" />
+          </AssociationSet>
+          <AssociationSet Name="Sucursal_Proveedor" Association="Self.Sucursal_Proveedor">
+            <End Role="CSucursal" EntitySet="CSucursal" />
+            <End Role="CProveedor" EntitySet="CProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="Sucursal_Supervisor" Association="Self.Sucursal_Supervisor">
+            <End Role="CSucursal" EntitySet="CSucursal" />
+            <End Role="CSupervisor" EntitySet="CSupervisor" />
+          </AssociationSet>
+          <AssociationSet Name="Supervisor_Empleado" Association="Self.Supervisor_Empleado">
+            <End Role="CSupervisor" EntitySet="CSupervisor" />
+            <End Role="CEmpleado" EntitySet="CEmpleado" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GestionProductosModelStoreContainer" CdmEntityContainer="BDGestionProductosEntities">
+          <EntitySetMapping Name="CEmpleado">
+            <EntityTypeMapping TypeName="GestionProductosModel.CEmpleado">
+              <MappingFragment StoreEntitySet="CEmpleado">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Dni" ColumnName="Dni" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Cargo" ColumnName="Cargo" />
+                <ScalarProperty Name="Fecha_ingreso" ColumnName="Fecha_ingreso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CProducto">
+            <EntityTypeMapping TypeName="GestionProductosModel.CProducto">
+              <MappingFragment StoreEntitySet="CProducto">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Oferta" ColumnName="Oferta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CProveedor">
+            <EntityTypeMapping TypeName="GestionProductosModel.CProveedor">
+              <MappingFragment StoreEntitySet="CProveedor">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CSucursal">
+            <EntityTypeMapping TypeName="GestionProductosModel.CSucursal">
+              <MappingFragment StoreEntitySet="CSucursal">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CSupervisor">
+            <EntityTypeMapping TypeName="GestionProductosModel.CSupervisor">
+              <MappingFragment StoreEntitySet="CSupervisor">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Fecha_ingreso" ColumnName="Fecha_ingreso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CUsuario">
+            <EntityTypeMapping TypeName="GestionProductosModel.CUsuario">
+              <MappingFragment StoreEntitySet="CUsuario">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Ruc" ColumnName="Ruc" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Contrasena" ColumnName="Contrasena" />
+                <ScalarProperty Name="Rol" ColumnName="Rol" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Producto_Proveedor" TypeName="GestionProductosModel.Producto_Proveedor" StoreEntitySet="Producto_Proveedor">
+            <EndProperty Name="CProducto">
+              <ScalarProperty Name="Codigo" ColumnName="Codigo_Producto" />
+            </EndProperty>
+            <EndProperty Name="CProveedor">
+              <ScalarProperty Name="Codigo" ColumnName="Codigo_Proveedor" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Sucursal_Empleado" TypeName="GestionProductosModel.Sucursal_Empleado" StoreEntitySet="Sucursal_Empleado">
+            <EndProperty Name="CSucursal">
+              <ScalarProperty Name="Codigo" ColumnName="Codigo_Sucursal" />
+            </EndProperty>
+            <EndProperty Name="CEmpleado">
+              <ScalarProperty Name="Codigo" ColumnName="Codigo_Empleado" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Sucursal_Producto" TypeName="GestionProductosModel.Sucursal_Producto" StoreEntitySet="Sucursal_Producto">
+            <EndProperty Name="CSucursal">
+              <ScalarProperty Name="Codigo" ColumnName="Codigo_sucursal" />
+            </EndProperty>
+            <EndProperty Name="CProducto">
+              <ScalarProperty Name="Codigo" ColumnName="Codigo_producto" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Sucursal_Proveedor" TypeName="GestionProductosModel.Sucursal_Proveedor" StoreEntitySet="Sucursal_Proveedor">
+            <EndProperty Name="CSucursal">
+              <ScalarProperty Name="Codigo" ColumnName="Codigo_sucursal" />
+            </EndProperty>
+            <EndProperty Name="CProveedor">
+              <ScalarProperty Name="Codigo" ColumnName="Codigo_proveedor" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Sucursal_Supervisor" TypeName="GestionProductosModel.Sucursal_Supervisor" StoreEntitySet="Sucursal_Supervisor">
+            <EndProperty Name="CSucursal">
+              <ScalarProperty Name="Codigo" ColumnName="Codigo_Sucursal" />
+            </EndProperty>
+            <EndProperty Name="CSupervisor">
+              <ScalarProperty Name="Codigo" ColumnName="Codigo_Supervisor" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Supervisor_Empleado" TypeName="GestionProductosModel.Supervisor_Empleado" StoreEntitySet="Supervisor_Empleado">
+            <EndProperty Name="CSupervisor">
+              <ScalarProperty Name="Codigo" ColumnName="Codigo_Supervisor" />
+            </EndProperty>
+            <EndProperty Name="CEmpleado">
+              <ScalarProperty Name="Codigo" ColumnName="Codigo_Empleado" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

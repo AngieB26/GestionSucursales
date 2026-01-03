@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35919.96 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negocio", "Negocio\Negocio.csproj", "{B89EEB8F-4EE7-4A11-A457-3B825D6FE8B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentacion", "Presentacion\Presentacion.csproj", "{9E6E7BAF-9A8C-4443-A12C-4848F8850CDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datos", "Datos\Datos.csproj", "{56755A05-6F85-42ED-BA92-8240739809EF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B89EEB8F-4EE7-4A11-A457-3B825D6FE8B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B89EEB8F-4EE7-4A11-A457-3B825D6FE8B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B89EEB8F-4EE7-4A11-A457-3B825D6FE8B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B89EEB8F-4EE7-4A11-A457-3B825D6FE8B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E6E7BAF-9A8C-4443-A12C-4848F8850CDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E6E7BAF-9A8C-4443-A12C-4848F8850CDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E6E7BAF-9A8C-4443-A12C-4848F8850CDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E6E7BAF-9A8C-4443-A12C-4848F8850CDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56755A05-6F85-42ED-BA92-8240739809EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56755A05-6F85-42ED-BA92-8240739809EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56755A05-6F85-42ED-BA92-8240739809EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56755A05-6F85-42ED-BA92-8240739809EF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C3386094-A815-4C5F-BBEF-C1990DA7259B}
+	EndGlobalSection
+EndGlobal
