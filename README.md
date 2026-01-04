@@ -1,4 +1,4 @@
-# Gestión de Sucursales, empleados y productos
+# Gestión de Sucursales, Empleados y Productos
 
 Aplicación de escritorio WinForms en C# (.NET Framework 4.7.2) para gestionar sucursales, supervisores, empleados, productos y proveedores.
 
@@ -72,3 +72,4 @@ Si quieres, creo también un `CONTRIBUTING.md` y un `.editorconfig` base para el
 
 
 This version should provide a clear and comprehensive guide for users and contributors to the project.
+
