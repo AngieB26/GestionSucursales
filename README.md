@@ -156,9 +156,10 @@ GestionSucursales/
 3. Abre un Pull Request hacia `master`
 
 ## Licencia
-Este proyecto se desarrolló con fines educativos.  Consulta con los autores para uso comercial.
+Este proyecto se desarrolló con fines educativos. 
 
 ---
 
 **Autor**: AngieB26  
 **Repositorio**: [AngieB26/GestionSucursales](https://github.com/AngieB26/GestionSucursales)
+
