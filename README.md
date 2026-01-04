@@ -1,75 +1,164 @@
 # Gestión de Sucursales, Empleados y Productos
 
-Aplicación de escritorio WinForms en C# (.NET Framework 4.7.2) para gestionar sucursales, supervisores, empleados, productos y proveedores.
+Aplicación de escritorio WinForms en C# (. NET Framework 4.7.2) para gestionar sucursales, supervisores, empleados, productos y proveedores con autenticación de usuarios.
 
 ## Resumen
-Interfaz CRUD que utiliza Entity Framework (EDMX) con el contexto `BDGestionProductosEntities` para persistencia en SQL Server. Esta aplicación es útil como ejemplo educativo o como base para una solución administrativa local.
+Interfaz CRUD que utiliza Entity Framework 6 (EDMX) con el contexto `BDGestionProductosEntities` para persistencia en SQL Server. Esta aplicación implementa una arquitectura en capas y es útil como ejemplo educativo o base para sistemas de gestión empresarial.
+
+## Características principales
+- **Gestión de usuarios**: Sistema de inicio de sesión y registro de usuarios
+- **Gestión de sucursales**:  CRUD completo para administrar sucursales
+- **Gestión de supervisores**:  Registro y administración de supervisores por sucursal
+- **Gestión de empleados**: Control de empleados vinculados a sucursales
+- **Gestión de productos**: Administración de productos con proveedores asociados
+- **Reportes**: Módulo de generación de reportes
 
 ## Requisitos
 - Visual Studio 2022
 - .NET Framework 4.7.2
-- SQL Server (local o remoto) con la base de datos usada por `BDGestionProductosEntities`
+- SQL Server (local o remoto)
+- Entity Framework 6.0
 
 ## Instalación
-1. Clona el repositorio:
+1. Clona el repositorio: 
+   ```bash
+   git clone https://github.com/AngieB26/GestionSucursales.git
+   ```
 
-    ```bash
-    git clone <URL-del-repositorio>
-    ```
+2. Abre la solución `TF_FSI_Grupo2.sln` en **Visual Studio 2022**.
 
-2. Abre la solución `GestionSucursales.sln` en __Visual Studio 2022__.
-3. Restaura paquetes NuGet si son necesarios: __Tools > NuGet Package Manager > Restore NuGet Packages__.
+3. Restaura paquetes NuGet:  **Tools > NuGet Package Manager > Manage NuGet Packages for Solution** y haz clic en **Restore**.
 
 ## Configuración de la base de datos
-Actualiza la cadena de conexión para `BDGestionProductosEntities` en `App.config` si es necesario. Ejemplo:
 
+### Actualizar cadena de conexión
+Edita el archivo `Presentacion/App.config` y actualiza la cadena de conexión `BDGestionProductosEntities`:
 
-<add name="BDGestionProductosEntities" connectionString="metadata=res://*/ModelBD.csdl|res://*/ModelBD.ssdl|res://*/ModelBD.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=SERVER_NAME;Initial Catalog=DB_NAME;Integrated Security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+```xml
+<connectionStrings>
+  <add name="BDGestionProductosEntities" 
+       connectionString="metadata=res://*/Model1.csdl|res://*/Model1.ssdl|res://*/Model1.msl;
+                        provider=System.Data.SqlClient;
+                        provider connection string=&quot;data source=TU_SERVIDOR;
+                        initial catalog=BDGestionProductos;
+                        integrated security=True;
+                        MultipleActiveResultSets=True;
+                        App=EntityFramework&quot;" 
+       providerName="System.Data.EntityFramework" />
+</connectionStrings>
+```
 
+**Ajusta según tu entorno:**
+- **Autenticación Windows**: `Integrated Security=True` (mantener como está)
+- **Autenticación SQL Server**:  Reemplaza con `User ID=TU_USUARIO;Password=TU_CONTRASEÑA;Integrated Security=False`
+- **Servidor**: Cambia `TU_SERVIDOR` por el nombre de tu instancia SQL Server (ej: `localhost`, `.\SQLEXPRESS`, etc.)
 
-- Reemplaza `SERVER_NAME` y `DB_NAME` según tu entorno.
-- Para autenticación SQL: dentro de `provider connection string` usa `User ID=TU_USUARIO;Password=TU_CONTRASEÑA;` en lugar de `Integrated Security=True`.
+### Crear la base de datos
+Asegúrate de tener creada la base de datos `BDGestionProductos` con las siguientes tablas:
+- `CSucursal`
+- `CSupervisor`
+- `CEmpleado`
+- `CProducto`
+- `CProveedor`
+- `CUsuario`
 
-Asegúrate de que las tablas y relaciones existen: `CSucursal`, `CSupervisor`, `CEmpleado`, `CProducto`, `CProveedor`, etc.
+**Nota**: El modelo Entity Framework se encuentra en `Datos/Model1.edmx`.
 
 ## Compilar y ejecutar
-- Compilar: __Build > Build Solution__ o __F6__ en __Visual Studio 2022__.
-- Ejecutar con depuración: __Debug > Start Debugging__ (__F5__).
-- Ejecutable generado: `Presentacion\bin\Debug\` o `Presentacion\bin\Release\`.
+
+### Compilar
+- Presiona **F6** o ve a **Build > Build Solution**
+
+### Ejecutar
+- Presiona **F5** o ve a **Debug > Start Debugging**
+- El formulario de inicio de sesión (`FormIniciarSesion`) se abrirá primero
+
+### Ejecutable generado
+El archivo `.exe` se encuentra en: 
+- Debug:  `Presentacion\bin\Debug\Presentacion.exe`
+- Release: `Presentacion\bin\Release\Presentacion. exe`
 
 ## Estructura del proyecto
-- `Presentacion` — Formularios WinForms y recursos.
-- `Negocio` — Lógica de negocio (`N*`).
-- `Datos` — Acceso a datos con Entity Framework (`D*`, `BDGestionProductosEntities`).
+
+```
+GestionSucursales/
+│
+├── Presentacion/              # Capa de presentación (WinForms)
+│   ├── FormIniciarSesion      # Formulario de login
+│   ├── FormRegistrarse        # Formulario de registro
+│   ├── FormPrincipal          # Formulario principal
+│   ├── FormMenu               # Menú de navegación
+│   ├── FormSucursales         # Gestión de sucursales
+│   ├── FormSupervisores       # Gestión de supervisores
+│   ├── FormEmpleados          # Gestión de empleados
+│   ├── FormProductos          # Gestión de productos
+│   ├── FormReportes           # Módulo de reportes
+│   └── App.config             # Configuración de conexión
+│
+├── Negocio/                   # Capa de lógica de negocio
+│   └── N*. cs                  # Clases de negocio (validaciones y reglas)
+│
+├── Datos/                     # Capa de acceso a datos
+│   ├── Model1.edmx            # Modelo Entity Framework
+│   ├── D*.cs                  # Clases de acceso a datos
+│   ├── C*.cs                  # Clases de entidad generadas por EF
+│   └── App. Config             # Configuración EF
+│
+└── TF_FSI_Grupo2.sln          # Archivo de solución
+```
 
 ## Notas operativas
-- Centraliza mensajes de error en la capa de negocio para consistencia en la UI.
-- Si las consultas tardan: revisa índices en la base de datos y considera aumentar `context.Database.CommandTimeout` temporalmente en la capa `Datos`.
-- Al registrar entidades relacionadas con sucursales (`CSupervisor`, `CProducto`), revisa la lógica en `Datos\DSupervisores.cs` o `Datos\DProductos.cs` para definir si se debe asociar automáticamente o rechazar duplicados globales.
+
+### Mejores prácticas
+- La lógica de negocio está centralizada en la capa `Negocio` para mantener consistencia
+- Los mensajes de error se gestionan centralmente para uniformidad en la UI
+- Se utiliza el patrón de arquitectura en tres capas (Presentación, Negocio, Datos)
+
+### Rendimiento
+- Si las consultas tardan:  revisa índices en SQL Server
+- Para consultas lentas temporalmente: aumenta `context.Database.CommandTimeout` en la capa Datos
+
+### Relaciones de entidades
+- Al registrar supervisores o productos, verifica la lógica en `Datos/DSupervisores.cs` y `Datos/DProductos.cs`
+- Las relaciones con sucursales se asocian automáticamente según la lógica implementada
 
 ## Pruebas rápidas
-1. Abrir `FormSupervisores` y registrar un supervisor nuevo; la grilla debe refrescarse inmediatamente.
-2. Intentar registrar un código existente; el mensaje debe indicar en qué sucursal(es) está registrado.
-3. Abrir `FormProductos` y comprobar carga de proveedores.
+
+1. **Autenticación**:
+   - Ejecuta la aplicación y registra un nuevo usuario en `FormRegistrarse`
+   - Inicia sesión con las credenciales creadas
+
+2. **Gestión de sucursales**:
+   - Abre `FormSucursales` desde el menú principal
+   - Registra una nueva sucursal
+   - La grilla debe refrescarse automáticamente
+
+3. **Gestión de supervisores**:  
+   - Abre `FormSupervisores`
+   - Registra un supervisor asociado a una sucursal
+   - Intenta registrar un código duplicado (debe mostrar mensaje de error indicando la sucursal)
+
+4. **Gestión de productos**:
+   - Abre `FormProductos`
+   - Verifica que la lista de proveedores se cargue correctamente
+   - Registra un nuevo producto con proveedor asociado
 
 ## Contribuir
-- Sigue las reglas de estilo definidas en `.editorconfig` y `CONTRIBUTING.md` si existen.
-- Crear ramas con formato `feature/descripcion` o `fix/descripcion` y abrir _pull requests_ hacia `master`.
+
+### Estándares de código
+- Mantén la arquitectura en tres capas
+- Documenta métodos públicos con comentarios XML
+- Usa nombres descriptivos en español para variables y métodos
+
+### Flujo de trabajo Git
+1. Crea una rama con formato `feature/descripcion` o `fix/descripcion`
+2. Realiza tus cambios y commits descriptivos
+3. Abre un Pull Request hacia `master`
 
 ## Licencia
-Añade la licencia del proyecto (por ejemplo MIT) según corresponda.
+Este proyecto se desarrolló con fines educativos.  Consulta con los autores para uso comercial.
 
 ---
 
-Si quieres, creo también un `CONTRIBUTING.md` y un `.editorconfig` base para el proyecto.
-
-
-### Improvements Made:
-1. **Formatting Consistency**: Ensured consistent use of formatting for code blocks and headings.
-2. **Clarity and Flow**: Enhanced the clarity of instructions and descriptions to improve the overall flow of the document.
-3. **Section Titles**: Maintained clear section titles for easy navigation.
-4. **Technical Accuracy**: Preserved technical details while ensuring they are presented in a user-friendly manner. 
-
-
-This version should provide a clear and comprehensive guide for users and contributors to the project.
-
+**Autor**: AngieB26  
+**Repositorio**: [AngieB26/GestionSucursales](https://github.com/AngieB26/GestionSucursales)
